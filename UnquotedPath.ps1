@@ -34,13 +34,13 @@ function firstCharQuotes {
     return ($path[0] -eq '"')
 }
 
-function Get-UnquotedPath {
+function Get-UnquotedServicePaths {
     <#
     .SYNOPSIS
-    Get-UnquotedPath finds Windows services with paths that should be wrapped in double quotes but aren't.
+    Get-UnquotedServicePaths finds Windows services with paths that should be wrapped in double quotes but aren't.
 
     .DESCRIPTION
-    The Get-UnquotedPath cmdlet checks Windows services' paths to identify any services whose paths contain spaces but are not enclosed in double quotes. In Windows, service paths with spaces should be enclosed in double quotes to prevent issues with path parsing.
+    The Get-UnquotedServicePaths cmdlet checks Windows services' paths to identify any services whose paths contain spaces but are not enclosed in double quotes. In Windows, service paths with spaces should be enclosed in double quotes to prevent issues with path parsing.
 
     By running this cmdlet, you can identify services with paths that may not follow the correct quoting convention and take appropriate action, such as correcting the service configuration.
 
@@ -48,9 +48,9 @@ function Get-UnquotedPath {
     This cmdlet does not accept any parameters.
 
     .EXAMPLE
-    Get-UnquotedPath
+    Get-UnquotedServicePaths
 
-    This example demonstrates how to use the Get-UnquotedPath cmdlet. It checks the Windows services and displays the paths of services that should be wrapped in double quotes but aren't.
+    This example demonstrates how to use the Get-UnquotedServicePaths cmdlet. It checks the Windows services and displays the paths of services that should be wrapped in double quotes but aren't.
 
     .INPUTS
     None. The cmdlet does not accept any input.

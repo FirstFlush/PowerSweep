@@ -51,12 +51,6 @@ function Get-ACLs {
     )
     $rightsHashSet = [System.Collections.Generic.HashSet[string]]@($rights)
     foreach ($path in $servicePaths) {
-        if ($path[0] -eq '"') {
-            $path = $path.Substring(1)
-        }
-        if ($path[-1] -eq '"') {
-            $path = $path.Substring(0, $path.Length - 1)
-        }
         $acl = Get-Acl -Path "$path" -ErrorAction SilentlyContinue
         foreach ($ace in $acl.Access) {
             $foreground = "Green"
@@ -86,19 +80,6 @@ function Get-ACLs {
             Write-Host "Audit`t: $($acl.Audit)" -ForegroundColor $foreground
             Write-Host "Sddl`t: $($acl.Sddl)" -ForegroundColor $foreground
             Write-Host ""
-            Write-Host ""
-        }
-        
+        }   
     }
-
-    # Initialize-AccessChk
-    # if ($accessChk -eq $null) {
-    #     Write-Host "`naccesschk.exe not found on system.`n"
-    #     Write-Host "https://docs.microsoft.com/en-us/sysinternals/downloads/accesschk`n"
-    #     return
-    # }
-    # write-host $accessChk
-    # & $accessChk "-uwcqv $username $service /accepteula"
-    # & "$accessChk"
-    # & "$accessChk" -uwcqv "$env:USERNAME" "ssh-agent" /accepteula
 }

@@ -1,6 +1,6 @@
-# PowerSweep - Windows Privilege Escalation Vector Finder
+# Powersweep - Windows Privilege Escalation Vector Finder
 
-PowerSweep is a PowerShell module designed to identify potential privilege escalation vectors on Windows systems. It can be useful for CTF challenges, security evaluations, and learning PowerShell scripting. Please note that this project is a work in progress and should not be solely relied upon for security assessments.
+Powersweep is a PowerShell module designed to identify potential privilege escalation vectors on Windows systems. It can be useful for CTF challenges, security evaluations, and learning PowerShell scripting. Please note that this project is a work in progress and should not be solely relied upon for security assessments.
 
 ## Features
 
@@ -11,11 +11,11 @@ Windows Security Center Information: Retrieves information about installed antiv
 
 ## Installation
 
-Clone the PowerSweep repository to your local machine.
+Clone the Powersweep repository to your local machine.
 Import the module into your PowerShell session using the Import-Module cmdlet.
 
 ```powershell
-Import-Module path\to\PowerSweep.psm1
+Import-Module path\to\Powersweep.psm1
 ```
 
 ## Contributions

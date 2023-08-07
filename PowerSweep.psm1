@@ -3,8 +3,9 @@
 . "$PSScriptRoot\AlwaysInstallElevated.ps1"
 . "$PSScriptRoot\ACLs.ps1"
 . "$PSScriptRoot\AVDetails.ps1"
+. "$PSScriptRoot\AccessChk.ps1"
 
-# $global:accessChk = "C:\Users\Me\Downloads\AccessChk\accesschk.exe"
+$global:accessChk = $null
 $global:services = (Get-WmiObject win32_service)
 $global:servicePaths = @()
 ($services).PathName | ForEach-Object {
@@ -12,6 +13,9 @@ $global:servicePaths = @()
     if ($path -ne $null) {
         if ($path[0] -eq '"') {
             $path = $path.Substring(1)
+        }
+        if ($path[-1] -eq '"') {
+            $path = $path.Substring(0, $path.Length - 1)
         }
         $index = $path.LastIndexOf(".exe")
         if ($index -gt 0) {
@@ -40,4 +44,4 @@ if ($servicePaths.Count -gt 0) {
 
 
 # Export the functions so they are available as cmdlets when the module is imported
-Export-ModuleMember -Function Get-UnquotedPath,Get-AlwaysInstallElevated, Get-ACLs, Get-AVDetails
+Export-ModuleMember -Function Get-UnquotedServicePaths, Get-AlwaysInstallElevated, Get-ACLs, Get-AVDetails, Install-AccessChk
