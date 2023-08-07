@@ -4,6 +4,7 @@
 . "$PSScriptRoot\ACLs.ps1"
 . "$PSScriptRoot\AVDetails.ps1"
 . "$PSScriptRoot\AccessChk.ps1"
+. "$PSScriptRoot\AutoRuns.ps1"
 
 $global:accessChk = $null
 $global:services = (Get-WmiObject win32_service)
@@ -44,4 +45,4 @@ if ($servicePaths.Count -gt 0) {
 
 
 # Export the functions so they are available as cmdlets when the module is imported
-Export-ModuleMember -Function Get-UnquotedServicePaths, Get-AlwaysInstallElevated, Get-ACLs, Get-AVDetails, Install-AccessChk
+Export-ModuleMember -Function Get-UnquotedServicePaths, Get-AlwaysInstallElevated, Get-ACLs, Get-AVDetails, Install-AccessChk, Get-AutoRuns
