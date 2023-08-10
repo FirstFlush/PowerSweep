@@ -4,7 +4,9 @@ function Get-AutoRuns {
     Get information about auto-running programs from various registry keys.
 
     .DESCRIPTION
-    The Get-AutoRuns cmdlet queries multiple registry keys to find auto-running programs. It checks the following keys:
+    The Get-AutoRuns cmdlet queries multiple registry keys to find auto-running programs. 
+    It checks the following keys:
+    
     - HKEY_CURRENT_USER (HKCU):
     - Software\Microsoft\Windows\CurrentVersion\Run
     - Software\Microsoft\Windows\CurrentVersion\RunOnce
@@ -39,7 +41,7 @@ function Get-AutoRuns {
     Write-Host ""
     foreach ($key in $regKeys) {
         Write-Host "$key" -ForegroundColor DarkGreen
-        # Write-Host "$('=' * $key.Length)"
         Get-ItemProperty -Path $key -ErrorAction SilentlyContinue
     }
 }
+

@@ -1,4 +1,4 @@
-function findAccessChk {
+function _findAccessChk {
     #Check if accesschk.exe is installed on local machine
     if ($global:accessChk -eq $null) {
         Write-Host "`nSearching for accesschk.exe on the local system..."
@@ -40,7 +40,7 @@ function Install-AccessChk {
         [switch]$NoSearch = $false
     )
     if (-not $NoSearch) {
-        findAccessChk
+        _findAccessChk
     }
     if ($global:accessChk -eq $null) {
         $url = "https://download.sysinternals.com/files/AccessChk.zip"

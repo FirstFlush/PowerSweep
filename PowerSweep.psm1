@@ -1,14 +1,43 @@
-# Import the Get-UnquotedPath function from the external .ps1 file
+<#
+.SYNOPSIS
+PowerSweep is a module for enumerating potential privilege escalation vectors on a Windows machine.
+
+.DESCRIPTION
+PowerSweep provides a set of functions designed to assist penetration testers and administrators
+in identifying security vulnerabilities and potential misconfigurations that could lead to privilege escalation.
+
+.NOTES
+File Name       : PowerSweep.psm1
+Author          : Michael Pearce
+Prerequisite    : Windows PowerShell
+        
+#>
+
 . "$PSScriptRoot\UnquotedPath.ps1"
 . "$PSScriptRoot\AlwaysInstallElevated.ps1"
 . "$PSScriptRoot\ACLs.ps1"
 . "$PSScriptRoot\AVDetails.ps1"
 . "$PSScriptRoot\AccessChk.ps1"
 . "$PSScriptRoot\AutoRuns.ps1"
+. "$PSScriptRoot\LowHangingFruit\Unattended.ps1"
+. "$PSScriptRoot\LowHangingFruit\EnvVars.ps1"
+. "$PSScriptRoot\LowHangingFruit\PSHistory.ps1"
+. "$PSScriptRoot\LowHangingFruit\WebConfig.ps1"
+
 
 $global:accessChk = $null
 $global:services = (Get-WmiObject win32_service)
 $global:servicePaths = @()
+$global:rights = @(
+    "FullControl",
+    "Modify",
+    "Write",
+    "ChangePermissions",
+    "TakeOwnership",
+    "Delete"
+)
+$global:insecurePrivsSet = [System.Collections.Generic.HashSet[string]]@($global:rights)
+
 ($services).PathName | ForEach-Object {
     $path = $_
     if ($path -ne $null) {
@@ -29,20 +58,7 @@ if ($servicePaths.Count -gt 0) {
     $servicePaths = $servicePaths | Select-object -Unique
 }
 
-
-# foreach ($servicePath in $servicePaths) {
-#     Write-Host "$servicePath"
-# }
-# $global:services = Get-Service
-# function Initialize-AccessChk {
-#     #Check if accesschk.exe is installed on local machine
-#     if ($accessChk -eq $null) {
-#         Write-Host "Looking for accesschk.exe on the local system..."
-#         Write-Host "This may take a minute or two."
-#         $global:accessChk = Get-ChildItem -Path C:\ -Recurse -Name "accesschk.exe" -ErrorAction SilentlyContinue
-#     }
-# }
-
-
 # Export the functions so they are available as cmdlets when the module is imported
-Export-ModuleMember -Function Get-UnquotedServicePaths, Get-AlwaysInstallElevated, Get-ACLs, Get-AVDetails, Install-AccessChk, Get-AutoRuns
+Export-ModuleMember -Function Get-UnquotedServicePaths, Get-AlwaysInstallElevated, 
+Get-ACLs, Get-AVDetails, Install-AccessChk, Get-AutoRuns, Get-Unattended, Get-EnvVars,
+Get-PSHistory, Get-WebConfig

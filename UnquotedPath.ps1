@@ -1,6 +1,6 @@
 
 
-function isExe {
+function _isExe {
     <#
     .SYNOPSIS
     Checks if the given path contains the substring ".exe".
@@ -17,7 +17,7 @@ function isExe {
     return $path.Contains(".exe")
 }
 
-function firstCharQuotes {
+function _firstCharQuotes {
     <#
     .SYNOPSIS
     Checks if the given path starts with double quotes.
@@ -65,10 +65,10 @@ function Get-UnquotedServicePaths {
     #>
 
     foreach ($path in $servicePaths) {
-        if (firstCharQuotes($path) -eq $true) {
+        if (_firstCharQuotes($path) -eq $true) {
             continue
         }
-        if (-not (isExe($path))) {
+        if (-not (_isExe($path))) {
             continue
         }
         if ($path.Contains(' ')) {
@@ -78,10 +78,10 @@ function Get-UnquotedServicePaths {
     }
     $win32services = (Get-WmiObject win32_service)
     foreach ($path in ($win32services).PathName) {
-            if (firstCharQuotes($path) -eq $true) {
+            if (_firstCharQuotes($path) -eq $true) {
                 continue
             }
-            if (-not (isExe($path))) {
+            if (-not (_isExe($path))) {
                 continue
             }
         $index = $path.LastIndexOf(".exe")

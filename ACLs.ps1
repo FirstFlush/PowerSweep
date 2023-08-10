@@ -39,17 +39,18 @@ function Get-ACLs {
     $ids = @(
         "Everyone", 
         "$username", 
-        "BUILTIN\Users"
+        "BUILTIN\Users",
+        "NT Authortiy\Interactive"
     )
-    $rights = @(
-        "FullControl",
-        "Modify",
-        "Write",
-        "ChangePermissions",
-        "TakeOwnership",
-        "Delete"
-    )
-    $rightsHashSet = [System.Collections.Generic.HashSet[string]]@($rights)
+    # $rights = @(
+    #     "FullControl",
+    #     "Modify",
+    #     "Write",
+    #     "ChangePermissions",
+    #     "TakeOwnership",
+    #     "Delete"
+    # )
+    # $insecurePrivsSet = [System.Collections.Generic.HashSet[string]]@($rights)
     foreach ($path in $servicePaths) {
         $acl = Get-Acl -Path "$path" -ErrorAction SilentlyContinue
         foreach ($ace in $acl.Access) {
@@ -58,7 +59,7 @@ function Get-ACLs {
             $hasHighPrivilege = $false
             if ($ids -contains $ace.IdentityReference -and $ace.AccessControlType -eq "Allow") {
                 foreach ($right in $aceRightsEnum) {
-                    if ($rightsHashSet -contains $right) {
+                    if ($global:insecurePrivsSet -contains $right) {
                         $hasHighPrivilege = $true
                     }
                 }

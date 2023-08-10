@@ -1,6 +1,6 @@
 
 
-function writeAlwaysInstallElevated {
+function _writeAlwaysInstallElevated {
     param (
         [bool]$is_enabled,
         [string]$hive
@@ -35,7 +35,7 @@ function Get-AlwaysInstallElevated {
         -Name AlwaysInstallElevated -ErrorAction SilentlyContinue
     ).AlwaysInstallElevated -eq 1
     Write-Host ""
-    writeAlwaysInstallElevated -is_enabled $installElevatedHKLM -hive "HKLM"
-    writeAlwaysInstallElevated -is_enabled $installElevatedHKCU -hive "HKCU"
+    _writeAlwaysInstallElevated -is_enabled $installElevatedHKLM -hive "HKLM"
+    _writeAlwaysInstallElevated -is_enabled $installElevatedHKCU -hive "HKCU"
     Write-Host ""
 }
