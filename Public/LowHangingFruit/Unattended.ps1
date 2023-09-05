@@ -44,7 +44,7 @@ function Get-Unattended {
         "private"
     )
     $pattern = ($searchStrings | ForEach-Object { [regex]::Escape($_) }) -join "|"
-    $patternSpecial = (($searchStringsSpecial | ForEach-Object { [regex]::Escape($_) }) -join "|")+"|[0-9A-Fa-f]{32}"
+    $patternSpecial = (($searchStringsSpecial | ForEach-Object { [regex]::Escape($_) }) -join "|")+"|[0-9A-Fa-f]{32}" #NTLM hash regex
     $esc = "$([char]27)"
     $FormatWrapYellow = "$esc[33m{0}$esc[0m"
     $FormatWrapRed = "$esc[91m{0}$esc[0m"

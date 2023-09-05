@@ -12,17 +12,33 @@ Author          : Michael Pearce
 Prerequisite    : Windows PowerShell
         
 #>
+. "$PsScriptRoot\Data\access.ps1"
 
-. "$PSScriptRoot\UnquotedPath.ps1"
-. "$PSScriptRoot\AlwaysInstallElevated.ps1"
-. "$PSScriptRoot\ACLs.ps1"
-. "$PSScriptRoot\AVDetails.ps1"
-. "$PSScriptRoot\AccessChk.ps1"
-. "$PSScriptRoot\AutoRuns.ps1"
-. "$PSScriptRoot\LowHangingFruit\Unattended.ps1"
-. "$PSScriptRoot\LowHangingFruit\EnvVars.ps1"
-. "$PSScriptRoot\LowHangingFruit\PSHistory.ps1"
-. "$PSScriptRoot\LowHangingFruit\WebConfig.ps1"
+# Private functions:
+. "$PSScriptRoot\Private\cleanServicePaths.ps1"
+. "$PSScriptRoot\Private\checkAcls.ps1"
+
+# Public functions:
+. "$PSScriptRoot\Public\UnquotedPath.ps1"
+. "$PSScriptRoot\Public\AlwaysInstallElevated.ps1"
+. "$PSScriptRoot\Public\ACLs.ps1"
+. "$PSScriptRoot\Public\AVDetails.ps1"
+. "$PSScriptRoot\Public\AccessChk.ps1"
+. "$PSScriptRoot\Public\AutoRuns.ps1"
+. "$PSScriptRoot\Public\LowHangingFruit\Unattended.ps1"
+. "$PSScriptRoot\Public\LowHangingFruit\EnvVars.ps1"
+. "$PSScriptRoot\Public\LowHangingFruit\PSHistory.ps1"
+. "$PSScriptRoot\Public\LowHangingFruit\WebConfig.ps1"
+
+
+function Get-UserGroupNames {
+    [CmdletBinding()]
+    $groupNames = @(Get-LocalGroup | Where-Object {(Get-LocalGroupMember -Group $_).Name -like "*\$env:USERNAME"}).Name
+    return $groupNames
+}
+
+$groupNames = Get-UserGroupNames
+$ids += $groupNames
 
 
 $global:accessChk = $null
